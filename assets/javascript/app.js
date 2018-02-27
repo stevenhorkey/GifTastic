@@ -3,42 +3,45 @@
 
 
 // var term = $("#gif-input").val();
-var terms = [];
+var gifTastic ={
+    terms : [],
+    displayGifs : function(){
+        var term = $(this).attr("data-name");
+        var queryURL = "http://api.giphy.com/v1/gifs/search?q=" + term + "&api_key=jocHuSXyJl9YL61rdYLxmy6ccBiHxt0k&limit=10";
 
-function displayGifs(){
+        $.ajax({
+            url: queryURL,
+            method: "GET"
+        }).then(function(response){
+            console.log(response);
 
-    var term = $(this).attr("data-name");
-    var queryURL = "http://api.giphy.com/v1/gifs/search?q=" + term + "&api_key=jocHuSXyJl9YL61rdYLxmy6ccBiHxt0k&limit=20";
+            $('.gif-section').empty();
+            for (var i = 0; i < response.data.length; i++){
+                var gif = $('<img/>').attr("src", response.data[i].images["original_still"].url);
+                gif.addClass('gif-img');
+                console.log(this);
+                $(".gif-section").append(gif)
+            }
+            $('.gif-img').on("click", function(){
+                var src = $(this).attr('src')
+                if(src.includes('_s.gif')){
+                    $(this).attr('src', src.replace('_s.gif','.gif'));
+                }
+                else{
+                    $(this).attr('src', src.replace('.gif','_s.gif'));
+                }
+            })
+        });
+    },
+    renderButtons : function(){
+        $(".button-selection").empty();
 
-    $.ajax({
-        url: queryURL,
-        method: "GET"
-    }).then(function(response){
-        console.log(response);
+        var term = $("#gif-input").val().trim();  
 
-        $('.gif-section').empty();
-        for (var i = 0; i < response.data.length; i++){
-            var gif = $('<img/>').attr("src", response.data[i].images["preview_gif"].url)
-            gif.addClass('gif-img')
-            $(".gif-section").append(gif)
-
-        }
-    
-    });
-}
-
-function renderButtons(){
-
-    $(".button-selection").empty();
-
-    var term = $("#gif-input").val().trim();  
-
-       
-
-        if (!terms.includes(term)){
+        if (!gifTastic.terms.includes(term)){
             if(term !== ""){
 
-                terms.push(term); 
+                gifTastic.terms.push(term); 
                 // user inputs a term
                 // if that term is not already in terms, than make a button for it.
                 var button = $("<button>");
@@ -52,11 +55,8 @@ function renderButtons(){
                 $(".button-section").append(button);
                 console.log("render buttons");
             }
-
-            
-
-    }    
-
+        }    
+    }
 }
 
 $(document).ready(function(){
@@ -67,16 +67,13 @@ $(document).ready(function(){
         var term = $("#gif-input").val().trim();
     
         console.log(term);
-        
-    
-        // terms.push(term);
-    
-        renderButtons();
+            
+        gifTastic.renderButtons();
     });
     
-    $(document).on("click", ".gif-button", displayGifs);
+    $(document).on("click", ".gif-button", gifTastic.displayGifs);
     
-    renderButtons();
+    gifTastic.renderButtons();
 })
 
 

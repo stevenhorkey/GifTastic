@@ -1,8 +1,9 @@
 body{
     background-color: black;
-    background-image: url('https://media.giphy.com/media/IeCVaFnmXFpjq/giphy.gif');
+    background-image: url('https://media.giphy.com/media/xUOxeZR9gmFzbH8FRS/giphy.gif');
+    background: repeat center center cover;
     /* background-position: center; */
-    background-size: 100%;
+    /* background-size: 100%; */
     max-width: 100vw;
 }
 
