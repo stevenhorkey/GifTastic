@@ -18,9 +18,14 @@ var gifTastic = {
             $('.gif-section').empty();
             // For each of the ten images in the response, an image element is made, given a relevent image source, given a class of gif-img, and added to the gif section on the html document.
             for (var i = 0; i < response.data.length; i++){
+                var wrap = $('<div>').addClass('gif-wrap col-md-4');
+                var rating = $('<p>').text(response.data[i].rating).addClass('rating-value');
                 var gif = $('<img/>').attr("src", response.data[i].images["original_still"].url);
+                gif.attr('alt',term + ' img')
                 gif.addClass('gif-img');
-                $(".gif-section").append(gif)
+                wrap.append(gif,rating);
+                
+                $(".gif-section").append(wrap)
             }
             // When a gif image is clicked on, the ending part of the source url is changed so that the gif stars playing when clicked, and stops when clicked again.
             $('.gif-img').on("click", function(){
