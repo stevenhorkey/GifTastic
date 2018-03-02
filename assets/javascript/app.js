@@ -14,7 +14,7 @@ var gifTastic = {
         }
         
         // API url which takes the term to search
-        var queryURL = "http://api.giphy.com/v1/gifs/search?q=" + term + "&api_key=jocHuSXyJl9YL61rdYLxmy6ccBiHxt0k&limit=" + num;
+        var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + term + "&api_key=jocHuSXyJl9YL61rdYLxmy6ccBiHxt0k&limit=" + num;
         // AJAX call 
         $.ajax({
             url: queryURL,
