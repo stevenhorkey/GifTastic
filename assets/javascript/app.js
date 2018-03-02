@@ -5,8 +5,16 @@ var gifTastic = {
     terms : [],
     displayGifs : function(){
         var term = $(this).attr("data-name");
+        // Grabs the number of gifs that the user inputs. Default is 20
+        var num; 
+        if ($('#gif-num').val().trim() !== ""){
+            num = $('#gif-num').val().trim();
+        } else {
+            num = 20;
+        }
+        
         // API url which takes the term to search
-        var queryURL = "http://api.giphy.com/v1/gifs/search?q=" + term + "&api_key=jocHuSXyJl9YL61rdYLxmy6ccBiHxt0k&limit=10";
+        var queryURL = "http://api.giphy.com/v1/gifs/search?q=" + term + "&api_key=jocHuSXyJl9YL61rdYLxmy6ccBiHxt0k&limit=" + num;
         // AJAX call 
         $.ajax({
             url: queryURL,
@@ -72,9 +80,3 @@ $(document).ready(function(){
     // When a button is clicked, the corresponding gifs display on the page
     $(document).on("click", ".gif-button", gifTastic.displayGifs);
 })
-
-
-
-
-
-
